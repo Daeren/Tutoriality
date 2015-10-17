@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------
 //
-// Author: Daeren Torn
+// Author: Daeren
 // Site: 666.io
 //
 //-----------------------------------------------------
@@ -14,14 +14,16 @@ var rHTTP       = require("http"),
     rWatcher    = require("chokidar"),
     rFS         = require("fs");
 
+//-----------------------------------------------------
+
 var gSrvPORT = 1337;
 
-//-----------------------------------------------------
+//------------------------]>
 
 var objWebServer    = rHTTP.createServer(fHandler),
     objWWServer     = new rWS.Server({"server": objWebServer});
 
-var objWatcher = rWatcher.watch(__dirname + "/public", {"ignoreInitial": true, "usePolling": true});
+var objWatcher      = rWatcher.watch(__dirname + "/public", {"ignoreInitial": true, "usePolling": true});
 
 //-----)>
 
