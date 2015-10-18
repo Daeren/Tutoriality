@@ -63,7 +63,7 @@ function onIterRange(range, callback) {
         rAsync.each(
             gPorts,
             function(port, cbEnd) {
-                httpGet(port, (error, response) => { if(!error) save(ip, port, response); cbEnd(); });
+                httpGet(port, (error, response) => (error ? cbEnd() : onSave(ip, port, response, cbEnd)));
             },
             next
         );
@@ -102,17 +102,21 @@ function onIterRange(range, callback) {
 }
 
 function onEndIterRange(error) {
-    console.log(error || "End");
+    console.log(error || "-THE END-");
 }
 
 //------------]>
 
-function save(ip, port, response) {
+function onSave(ip, port, response, next) {
     var contentLength = response.headers["content-length"];
     contentLength = parseInt(contentLength, 10);
 
-    if(!contentLength)
+    if(!contentLength) {
+        next();
         return;
+    }
 
-    console.log("Response: %s:%s | %s / %s", ip, port, response.statusCode, contentLength);
+    console.log("| %s:%s | %s / %s", ip, port, response.statusCode, contentLength);
+
+    next();
 }
